@@ -231,6 +231,11 @@ scene ("fight", () => {
        }
      }
    }
+   onKeyDown("w", () => {
+     makeJump(player1);
+   });
+
+   player1.onUpdate(() => resetAfterJump(player1));
 })
 
 go ("fight")

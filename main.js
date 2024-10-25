@@ -304,6 +304,20 @@ scene ("fight", () => {
        }
      });
 
+     onKeyDown("up", () => {
+       makeJump(player2);
+     });
+
+     player2.onUpdate(() => resetAfterJump(player2));
+
+     onKeyPress("down", () => {
+       attack(player2, ["left", "right", "up"]);
+     });
+
+     onKeyRelease("down", () => {
+       destroyAll(player2.id + "attackHitbox");
+     });
+
 })
 
 go ("fight")

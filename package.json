@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "desk": "electron ."
   },
   "devDependencies": {
+    "electron": "^33.0.2",
     "vite": "^5.4.8"
   },
   "dependencies": {

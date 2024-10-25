@@ -460,3 +460,52 @@ scene ("fight", () => {
 })
 
 go ("fight")
+
+
+
+
+// electron set up 
+
+
+// import { app, BrowserWindow } from "electron";
+// import path from "path";
+
+// Create the main window
+// function createWindow() {
+//   const mainWindow = new BrowserWindow({
+//     width: 1280,
+//     height: 720,
+//     webPreferences: {
+//       preload: path.join(__dirname, "preload.js"), // optional, if you need a preload script
+//     },
+//   });
+//   win.loadURL("https://www.google.com");
+//   win.loadFile(path.join(__dirname, "index.html"));
+
+//   // Load your HTML file or game
+//   // mainWindow.loadFile(path.join(__dirname, "index.html")); // Adjust this if you have a different entry point
+// }
+
+// // When Electron is ready, create the window
+// app.whenReady().then(() => {
+//   createWindow();
+
+//   // Quit the app when all windows are closed
+//   app.on("window-all-closed", () => {
+//     if (process.platform !== "darwin") {
+//       app.quit();
+//     }
+//   });
+
+//   // Re-create the window on macOS when clicking the app icon in the dock
+//   app.on("activate", () => {
+//     if (BrowserWindow.getAllWindows().length === 0) {
+//       createWindow();
+//     }
+//   });
+// });
+
+// // Quit the app if it is closed in the background
+// app.on("before-quit", () => {
+//   app.quit();
+// });

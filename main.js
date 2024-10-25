@@ -185,9 +185,52 @@ scene ("fight", () => {
     player.move(speed, 0);
     player.flipX = flipPlayer;
   }
+  function resetPlayerToIdle(player) {
+    player.use(sprite(player.sprites.idle));
+    player.play("idle");
+  }
   onKeyDown("d", () => {
     run(player1, 500, false);
   });
+  onKeyRelease("d", () => {
+    if (player1.health !== 0) {
+      resetPlayerToIdle(player1);
+      player1.flipX = false;
+    }
+  });
+
+  onKeyDown("a", () => {
+    run(player1, -500, true);
+  });
+  onKeyRelease("a", () => {
+    if (player1.health !== 0) {
+      resetPlayerToIdle(player1);
+      player1.flipX = true;
+    }
+  });
+   function makeJump(player) {
+     if (player.health === 0) {
+       return;
+     }
+
+     if (player.isGrounded()) {
+       const currentFlip = player.flipX;
+       player.jump();
+       player.use(sprite(player.sprites.jump));
+       player.flipX = currentFlip;
+       player.play("jump");
+       player.isCurrentlyJumping = true;
+     }
+   }
+
+   function resetAfterJump(player) {
+     if (player.isGrounded() && player.isCurrentlyJumping) {
+       player.isCurrentlyJumping = false;
+       if (player.curAnim() !== "idle") {
+         resetPlayerToIdle(player);
+       }
+     }
+   }
 })
 
 go ("fight")

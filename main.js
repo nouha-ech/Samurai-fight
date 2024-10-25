@@ -271,6 +271,7 @@ scene ("fight", () => {
         });
       }
     }
+    // SPACE TO ATTACK
      onKeyPress("space", () => {
        attack(player1, ["a", "d", "w"]);
      });
@@ -278,10 +279,22 @@ scene ("fight", () => {
      onKeyRelease("space", () => {
        destroyAll(player1.id + "attackHitbox");
      });
+     // init player 2
      const player2 = makePlayer(1000, 200, 16, 52, 4, "player2");
      player2.use(sprite(player2.sprites.idle));
      player2.play("idle");
      player2.flipX = true;
+
+     onKeyDown("right", () => {
+       run(player2, 500, false);
+     });
+     onKeyRelease("right", () => {
+       if (player2.health !== 0) {
+         resetPlayerToIdle(player2);
+         player2.flipX = false;
+       }
+     });
+
 })
 
 go ("fight")

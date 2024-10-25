@@ -345,6 +345,35 @@ scene ("fight", () => {
       let gameOver = false;
       onKeyDown("enter", () => (gameOver ? go("fight") : null));
 
+       function declareWinner(winningText, player1, player2) {
+         if (
+           (player1.health > 0 && player2.health > 0) ||
+           (player1.health === 0 && player2.health === 0)
+         ) {
+           winningText.text = "Tie!";
+         } else if (player1.health > 0 && player2.health === 0) {
+           winningText.text = "Player 1 won!";
+           player2.use(sprite(player2.sprites.death));
+           player2.play("death");
+         } else {
+           winningText.text = "Player 2 won!";
+           player1.use(sprite(player1.sprites.death));
+           player1.play("death");
+         }
+       }
+
+       const countInterval = setInterval(() => {
+         if (count.timeLeft === 0) {
+           clearInterval(countInterval);
+           declareWinner(winningText, player1, player2);
+           gameOver = true;
+
+           return;
+         }
+         count.timeLeft--;
+         count.text = count.timeLeft;
+       }, 1000);
+
 
 
 

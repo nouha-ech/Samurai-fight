@@ -294,6 +294,15 @@ scene ("fight", () => {
          player2.flipX = false;
        }
      });
+     onKeyDown("left", () => {
+       run(player2, -500, true);
+     });
+     onKeyRelease("left", () => {
+       if (player2.health !== 0) {
+         resetPlayerToIdle(player2);
+         player2.flipX = true;
+       }
+     });
 
 })
 

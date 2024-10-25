@@ -58,6 +58,23 @@ loadSprite("run-player1", "/run-player1.png", {
   anims: { run: { from: 0, to: 7, speed: 18 } },
 });
 
+loadSprite("jump-player1", "/jump-player1.png", {
+  sliceX: 2,
+  sliceY: 1,
+  anims: { jump: { from: 0, to: 1, speed: 2, loop: true } },
+});
+loadSprite("attack-player1", "/attack-player1.png", {
+  sliceX: 6,
+  sliceY: 1,
+  anims: { attack: { from: 1, to: 5, speed: 18 } },
+});
+
+loadSprite("death-player1", "/death-player1.png", {
+  sliceX: 6,
+  sliceY: 1,
+  anims: { death: { from: 0, to: 5, speed: 10 } },
+});
+
 // make scene here
 scene ("fight", () => {
   const background = add([

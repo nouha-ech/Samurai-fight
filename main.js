@@ -278,6 +278,10 @@ scene ("fight", () => {
      onKeyRelease("space", () => {
        destroyAll(player1.id + "attackHitbox");
      });
+     const player2 = makePlayer(1000, 200, 16, 52, 4, "player2");
+     player2.use(sprite(player2.sprites.idle));
+     player2.play("idle");
+     player2.flipX = true;
 })
 
 go ("fight")

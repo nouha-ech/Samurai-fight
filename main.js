@@ -105,99 +105,89 @@ loadSprite("death-player2", "/death-player2.png", {
 });
 // make scene here
 scene ("fight", () => {
-  const background = add([
-    sprite("background"),
-    scale(4)
-  ])
-  background.add([
-    sprite("trees"),
-  ])
-     const groundTiles = addLevel(
-       [
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "------#######-----------",
-         "dddddddddddddddddddddddd",
-         "dddddddddddddddddddddddd",
-       ],
-       {
-         tileWidth: 16,
-         tileHeight: 16,
-         tiles: {
-           "#": () => [
-             sprite("ground-golden"),
-             area(),
-             body({ isStatic: true }),
-           ],
-           "-": () => [
-             sprite("ground-silver"),
-             area(),
-             body({ isStatic: true }),
-           ],
-           d: () => [sprite("deep-ground"), area(), body({ isStatic: true })],
-         },
-       }
-     );
-       groundTiles.use(scale(4));
+  const background = add([sprite("background"), scale(4)]);
+  background.add([sprite("trees")]);
+  const groundTiles = addLevel(
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "------#######-----------",
+      "dddddddddddddddddddddddd",
+      "dddddddddddddddddddddddd",
+    ],
+    {
+      tileWidth: 16,
+      tileHeight: 16,
+      tiles: {
+        "#": () => [sprite("ground-golden"), area(), body({ isStatic: true })],
+        "-": () => [sprite("ground-silver"), area(), body({ isStatic: true })],
+        d: () => [sprite("deep-ground"), area(), body({ isStatic: true })],
+      },
+    }
+  );
+  groundTiles.use(scale(4));
 
-       const shop = background.add([sprite("shop"), pos(170, 15)]);
+  const shop = background.add([sprite("shop"), pos(170, 15)]);
 
-       shop.play("default");
-        background.add([sprite("fence"), pos(85, 125)]);
+  shop.play("default");
+  background.add([sprite("fence"), pos(85, 125)]);
 
-        background.add([sprite("fence"), pos(10, 125)]);
+  background.add([sprite("fence"), pos(10, 125)]);
 
-        background.add([sprite("sign"), pos(290, 115)]);
+  background.add([sprite("sign"), pos(290, 115)]);
 
-         function makePlayer(posX, posY, width, height, scaleFactor, id) {
-           return add([
-             pos(posX, posY),
-             scale(scaleFactor),
-             area({ shape: new Rect(vec2(0), width, height) }),
-             anchor("center"),
-             body({ stickToPlatform: true }),
-             {
-               isCurrentlyJumping: false,
-               health: 500,
-               sprites: {
-                 run: "run-" + id,
-                 idle: "idle-" + id,
-                 jump: "jump-" + id,
-                 attack: "attack-" + id,
-                 death: "death-" + id,
-               },
-             },
-           ]);
-         }
+  // for invisible walls ( prevent not run outside scene)
+  add([rect(16, 720), area(), body({ isStatic: true }), pos(-20, 0)]);
+  add([rect(16, 720), area(), body({ isStatic: true }), pos(1280, 0)]);
 
-          setGravity(1200);
+  function makePlayer(posX, posY, width, height, scaleFactor, id) {
+    return add([
+      pos(posX, posY),
+      scale(scaleFactor),
+      area({ shape: new Rect(vec2(0), width, height) }),
+      anchor("center"),
+      body({ stickToPlatform: true }),
+      {
+        isCurrentlyJumping: false,
+        health: 500,
+        sprites: {
+          run: "run-" + id,
+          idle: "idle-" + id,
+          jump: "jump-" + id,
+          attack: "attack-" + id,
+          death: "death-" + id,
+        },
+      },
+    ]);
+  }
 
-          const player1 = makePlayer(200, 100, 16, 42, 4, "player1");
-          player1.use(sprite(player1.sprites.idle));
-          player1.play("idle");
-             function run(player, speed, flipPlayer) {
-               if (player.health === 0) {
-                 return;
-               }
+  setGravity(1200);
 
-               if (player.curAnim() !== "run" && !player.isCurrentlyJumping) {
-                 player.use(sprite(player.sprites.run));
-                 player.play("run");
-               }
-               player.move(speed, 0);
-               player.flipX = flipPlayer;
-             }
-             onKeyDown("d", () => {
-               run(player1, 500, false);
-             });
+  const player1 = makePlayer(200, 100, 16, 42, 4, "player1");
+  player1.use(sprite(player1.sprites.idle));
+  player1.play("idle");
+  function run(player, speed, flipPlayer) {
+    if (player.health === 0) {
+      return;
+    }
 
+    if (player.curAnim() !== "run" && !player.isCurrentlyJumping) {
+      player.use(sprite(player.sprites.run));
+      player.play("run");
+    }
+    player.move(speed, 0);
+    player.flipX = flipPlayer;
+  }
+  onKeyDown("d", () => {
+    run(player1, 500, false);
+  });
 })
 
 go ("fight")
